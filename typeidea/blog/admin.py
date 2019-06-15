@@ -52,9 +52,10 @@ class TagAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = [
         'title','desc','status','category',
-        'created_time','operator','owner'
+        'created_time','operator'
     ]
 
+    exclude = ('owner',)
     list_display_links = []
 
     list_filter = [CategoryOwnerFilter]
@@ -71,7 +72,6 @@ class PostAdmin(admin.ModelAdmin):
         'status',
         'content',
         'tag',
-        ''
     )
 
     def operator(self,obj):
@@ -91,3 +91,4 @@ class PostAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super(PostAdmin,self).get_queryset(request)
         return qs.filter(owner=request.user)
+
